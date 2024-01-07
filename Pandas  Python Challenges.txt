@@ -1,0 +1,526 @@
+import pandas
+df=facebook_web_log
+df['dates'] = df['timestamp'].dt.date
+df.groupby('user_id','dates')
+
+
+import pandas as pd
+import numpy as np
+
+# Start writing code
+df=fraud_score
+df['percentile']=df.groupby(by=['state'])['fraud_score'].rank(pct=True)
+df_filt=df[df['percentile']>0.95]
+
+
+import pandas as pd
+
+# Start writing code
+forbes_global_2010_2014.sort_values(by=['profits'],ascending=False)[['company','profits']].head(3)
+
+
+# Import your libraries
+import pandas as pd
+
+# Start writing code
+worker.head()
+new_df = worker.merge(title, left_on=['worker_id'], right_on = ['worker_ref_id'])
+#new_df.sort_values(by=['salary'],ascending=False)
+new_df[new_df.salary == new_df.salary.max()]['worker_title']
+
+
+# Import your libraries
+import pandas as pd
+
+# Start writing code
+df=google_gmail_emails
+df_filt=df.groupby('from_user').size().to_frame('total_emails').reset_index()
+df_filt
+df_filt['rank']=df_filt['total_emails'].rank(method='first',ascending=False)
+df_filt.sort_values(by=['total_emails','from_user'],ascending=[False,True])
+# # df_filt
+# # # df_filt
+
+
+# Import your libraries
+import pandas as pd
+
+# Start writing code
+df=amazon_transactions
+df=pd.merge(amazon_transactions,amazon_transactions,on='user_id')
+df=df[df['id_x']!=df['id_y']]
+df['datediff']=(df['created_at_y']-df['created_at_x']).dt.days
+df[(df['datediff']<=7) &(df['datediff']>=0)]['user_id'].unique()
+
+
+
+
+# Import your libraries
+import pandas as pd
+
+# Start writing code
+df=car_launches
+df_2020=df.loc[df['year']==2020]
+df_2019=df.loc[df['year']==2019]
+s1=df_2019.groupby('company_name')['product_name'].agg('count').reset_index()
+s2=df_2020.groupby('company_name')['product_name'].agg('count').reset_index()
+merged=pd.merge(s1,s2,left_on='company_name',right_on='company_name')
+merged['diff']=merged['product_name_y']-merged['product_name_x']
+merged[['company_name','diff']]
+
+
+import pandas as pd
+df1=db_employee
+df2=db_dept
+df=pd.merge(left=df1,right=df2,left_on='department_id',right_on='id',how='inner')
+df_eng_max=df.loc[df['department']=='marketing']['salary'].max()
+df_mkt_max=df.loc[df['department']=='engineering']['salary'].max()
+df_eng_max-df_mkt_max
+
+
+
+import pandas as pd
+df=ms_employee_salary
+df.groupby('id')['first_name','last_name','department_id','salary'].max().reset_index()
+
+
+
+
+import pandas as pd
+fb_friend_requests.head(5)
+
+t1=fb_friend_requests[fb_friend_requests['action'] == 'sent']
+t2=fb_friend_requests[fb_friend_requests['action'] == 'accepted']
+t3=t1.merge(t2,left_on=['user_id_sender','user_id_receiver'],right_on=['user_id_sender','user_id_receiver'],how='left')
+t3['records']=(t3['action_y'].notna())*1
+t3.groupby('date_x')['records'].mean().reset_index()
+
+
+
+
+# way out
+# import pandas as pd
+
+# # Start writing code
+# t1 = fb_friend_requests[fb_friend_requests['action'] == 'sent']
+# t1
+# t2 = fb_friend_requests[fb_friend_requests['action'] == 'accepted']
+# t2
+# t3 = t1.merge(t2, left_on = ['user_id_sender','user_id_receiver'],right_on = ['user_id_sender','user_id_receiver'],how='left')
+# t3
+# t3['blank'] = (t3['action_y'].notna())*1
+# t3.groupby('date_x')['blank'].mean().reset_index()
+
+
+
+import pandas as pd
+df=dc_bikeshare_q1_2012
+df.groupby('bike_number')['end_time'].max().reset_index()
+
+import pandas as pd
+df=hotel_reviews
+df=df.loc[df['hotel_name']=='Hotel Arena']
+df=df.groupby(["reviewer_score", "hotel_name"]).size().to_frame('n_reviews').reset_index()
+
+
+import pandas as pd
+
+# Start writing code
+data=airbnb_contacts.copy()
+data=data.groupby(by='id_guest')['n_messages'].sum().reset_index()
+data=data.sort_values(by='n_messages',ascending=False)
+data['rank']=data['n_messages'].rank(method='dense',ascending=False)
+data
+
+
+
+import pandas as pd
+df=oscar_nominees
+df=df.loc[df['nominee']=='Abigail Breslin']
+len(df)
+
+
+
+# Import your libraries
+import pandas as pd
+
+# Start writing code
+df_ord=orders
+df_cust=customers
+merged=pd.merge(df_ord,df_cust,left_on='cust_id',right_on='id')
+p=len(merged)
+l=len(merged.dropna())
+round(((l/p)*100),2)
+
+# Import your libraries
+import pandas as pd
+
+# Start writing code
+df1=airbnb_hosts
+df2=airbnb_guests
+merged=pd.merge(df1,df2,left_on='nationality',right_on='nationality')
+merged_filt=merged.loc[merged['gender_x']==merged['gender_y']]
+merged_filt[['host_id','guest_id']].drop_duplicates()
+
+
+# Import your libraries
+import pandas as pd
+
+# Start writing code
+
+df1=sf_employee
+df2=sf_bonus
+df_joined = pd.merge(df1,df2, how='inner', left_on='id', right_on='worker_ref_id')
+
+df_joined['Total_compensation'] = df_joined['bonus'] + df_joined['salary']
+
+result = df_joined.groupby(['employee_title', 'sex']).agg(avg_total_comp=('Total_compensation', 'mean')).reset_index()
+
+print(result)
+
+
+
+
+import pandas as pd
+
+# Start writing code
+
+df = pd.concat([fb_eu_energy,fb_asia_energy,fb_na_energy])
+df = df.groupby('date',as_index=False).sum()
+mymax = df['consumption'].max()
+mymax
+df = df[df['consumption'] == mymax]
+df
+
+
+
+# Import your libraries
+import pandas as pd 
+
+# Start writing code
+df=yelp_reviews
+df=df[df.cool==df.cool.max()]
+df[['business_name','review_text']]
+
+
+import pandas as pd
+df=yelp_business[['categories','review_count']]
+df['categories']=df['categories'].str.split(';')
+df=df.explode("categories")
+
+df.groupby('categories')['review_count'].sum().reset_index().sort_values(by='review_count',ascending=False)
+
+
+# Import your libraries
+import pandas as pd
+
+# Start writing cod
+df=yelp_business.groupby(by=['name'])[['name','review_count']].agg("sum").sort_values(by='review_count',ascending=False).reset_index().head(5)
+
+
+import pandas as pd
+
+# Start writing code
+df=winemag_p1
+pattern = r'\b(plum|cherry|rose|hazelnut)\b'
+df=df[df['description'].str.lower().str.contains(pattern)]
+df=df.winery
+df=df.drop_duplicates()
+
+
+# Import your libraries
+import pandas as pd
+
+# Start writing code
+df=lyft_drivers
+df
+df=df.loc[(df['yearly_salary']<=30000) | (df['yearly_salary']>=70000)]
+
+import pandas as pd
+df=spotify_worldwide_daily_song_ranking
+df.groupby('artist')['id'].count().reset_index().sort_values(by='id',ascending=False)
+
+# Import your libraries
+import pandas as pd
+
+# Start writing code
+df=spotify_worldwide_daily_song_ranking
+df=df[df['position']==1]
+df.groupby('trackname')['position'].agg('count').sort_values(ascending=False).reset_index()
+
+
+import pandas as pd
+df=sf_public_salaries
+df[df['jobtitle'].str.contains('CAPTAIN')][['employeename','basepay']]
+
+
+import pandas as pd
+
+# Create a sample DataFrame
+data = {'Name': ['John', 'Alice', 'Bob', 'Alice', 'Bob'],
+        'Age': [25, 30, 35, 28, 32],
+        'City': ['New York', 'London', 'Paris', 'Lo', 'Paris']}
+df = pd.DataFrame(data)
+
+# Reset index before grouping
+df_reset_before = df.reset_index()
+print("Before grouping:")
+print(df_reset_before)
+
+# Group by 'Name' and calculate the average age
+df_grouped = df.groupby('Name').count()
+
+# Reset index after grouping
+df_reset_after = df_grouped.reset_index()
+print("\nAfter grouping:")
+print(df_reset_after)
+
+
+
+import pandas as pd
+df=library_usage
+df_filt=df[df['circulation_active_year']==2016]
+df_new=df_filt.loc[(df_filt['notice_preference_definition']=='email') & (df_filt['provided_email_address']==False) ][['home_library_code']].drop_duplicates()
+
+import pandas as pd
+df=employee
+df_avg=df.groupby('department')['salary'].mean().reset_index()
+df_new=pd.merge(df,df_avg,on='department')[['department','first_name','salary_x','salary_y']]
+
+
+# Import your libraries
+import pandas as pd
+
+# Start writing code
+customers.head()
+df=pd.merge(customers,orders,how='left',left_on='id',right_on='cust_id')
+df_filt= df[(df['order_date'] >='2019-02-01' ) & (df['order_date'] <= '2019-05-01')]
+df_filt['order_date'] = df_filt['order_date'].apply(lambda x:x.date())
+df_filt.groupby(['first_name','order_date'])['total_order_cost'].sum().sort_values(ascending=False).reset_index().head(1)
+
+
+# Import your libraries
+import pandas as pd
+
+# Start writing code
+df=customers.merge(orders,how="inner",left_on='id',right_on='cust_id')
+df=df[(df['first_name']=='Jill') | (df['first_name']=='Eva')]
+df.sort_values(by=['cust_id'])
+df
+
+
+# Import your libraries
+import pandas as pd
+
+# Start writing code
+df=salesforce_employees.loc[salesforce_employees['manager_id']==13]
+max_target=df['target'].max()
+df1=df[['first_name','target']].loc[df['target']==max_target]
+
+
+# Import your libraries
+import pandas as pd
+
+# Start writing code
+# df=employee
+# max_salaried_employees=df.loc[df.groupby(by=['department'])['salary'].idxmax()]
+# max_salaried_employees[['department','first_name','']]
+df=employee
+max_salaried_employees=df.groupby(by=['department'])
+
+
+# Import your libraries
+import pandas as pd
+
+# Start writing code
+e=employee
+m=employee
+merged=pd.merge(e,m,how='inner',left_on='id',right_on='manager_id')
+fellow=merged.loc[(merged['salary_x']<merged['salary_y'])&(merged['id_x']==merged['manager_id_y'])][['first_name_y','salary_y']]
+
+# Import your libraries
+import pandas as pd
+
+# Start writing code
+df=employee.sort_values(by='salary',ascending=False) 
+df['rank']=df['salary'].rank(method='first',ascending=False)
+df.loc[df['rank']==2]['salary']
+
+import pandas as pd
+df1=customers
+df2=orders
+df=pd.merge(df1,df2,left_on='id',right_on='cust_id',how='left')
+df=df.drop_duplicates()
+df[['first_name','last_name','city','order_details']].sort_values(['first_name','order_details'],ascending=True)
+
+
+# Import your libraries
+import pandas as pd
+
+# Start writing code
+df=worker
+df_filtered=df[df['joining_date']>='2014-04-01']
+df_filtered.groupby('department')['worker_id'].count().reset_index()
+
+
+import pandas as pd
+df=worker
+df=df.loc[(df['department']=='Admin') & (df['joining_date']>='2014-04-01')]
+len(df)
+
+
+# Import your libraries
+import pandas as pd
+
+# Start writing code
+df=google_file_store
+df_filt=df.loc[df['filename'].str.contains("draft")]['contents']
+df_filt=df_filt.str.lower().str.split("\W+")
+df_filt.explode('contents').value_counts().reset_index().dropna()
+
+
+
+# Import your libraries
+import pandas as pd
+data=google_file_store
+bulls=data['contents'].apply(lambda x : x.count('bull')).sum()
+bear=data['contents'].apply(lambda x : x.count('bear')).sum()
+result=pd.DataFrame({'Word':['bull','bear'],'netry':[bulls,bear]})
+
+
+
+# Import your libraries
+import pandas as pd
+
+# Start writing code
+df=orders
+start_time=pd.Timestamp('2019-03-01 00:00:00')
+end_time=pd.Timestamp('2019-03-14 00:00:00')
+df=df[(df['order_date']>=start_time) & (df['order_date']<=end_time)  ]
+df.groupby('cust_id')['total_order_cost'].sum().reset_index().sort_values(by=['total_order_cost'],ascending=False)
+
+
+
+
+
+
+import pandas as pd
+import numpy as np
+
+facebook_complaints['processed'] = facebook_complaints['processed'].astype(int)
+grouped = facebook_complaints.groupby(['type']).agg({'processed':'sum','complaint_id':'size'}).reset_index()
+
+
+
+# Import your libraries
+import pandas as pd
+
+# Start writing code
+df=sf_restaurant_health_violations
+df=df.loc[df['business_name']== 'Roxanne Cafe']
+df['year']=df['inspection_date'].dt.strftime('%Y')
+df_filt=df.groupby('year')['violation_id'].nunique().reset_index()
+df_filt
+
+
+result = fb_active_users[fb_active_users['country'] == 'USA'].groupby('status')['user_id'].count().to_frame(
+    'user_count')
+result = result.loc['open'] / result['user_count'].sum()
+
+
+# Import your libraries
+import pandas as pd
+df=fact_events
+df=df.groupby([df['client_id'],df['time_id'].dt.month])['user_id'].nunique().reset_index()
+
+
+# Import your libraries
+import pandas as pd
+
+# Start writing code
+df=voting_results
+df=df.dropna(axis=0)
+df['vote_value']=df['voter'].apply(lambda x:1/(df['voter']==x).sum())
+df_grouped=df.groupby("candidate").sum().reset_index()
+df_grouped.sort_values(by='vote_value',ascending=False)['candidate'].head(1)
+
+
+
+
+
+
+import pandas as pd
+user_flags = user_flags[user_flags["flag_id"].notnull()]
+
+user_flags['user'] = (user_flags['user_firstname'].astype(str) + ' ' + user_flags['user_lastname'].astype(str))
+
+result = user_flags.groupby('video_id')['user'].nunique().reset_index()
+
+result = result.rename(columns={'user':'num_unique_users'})
+
+result
+
+
+
+
+
+
+import pandas as pd
+df1=user_flags
+df2=flag_review
+df=pd.merge(user_flags,flag_review,left_on='flag_id',right_on='flag_id')
+df['name']= df['user_firstname']+' '+ df['user_lastname']
+df_new=df.loc[df['reviewed_outcome']=='APPROVED']
+d=df_new.groupby('name')['video_id'].nunique().reset_index().sort_values(by='video_id',ascending=False)
+d.loc[d['video_id'].values==d['video_id'].max()]['name']
+
+
+
+
+import pandas as pd
+df=online_orders
+df=df.loc[(df['date']>='2022-01-01') & (df['date']<='2022-06-30')]
+df['revenue']=df['cost_in_dollars']*df['units_sold']
+df.groupby('product_id')['revenue'].sum().reset_index().sort_values(by='revenue',ascending=False).head(5)
+
+
+
+
+# Import your libraries
+import pandas as pd
+
+# Start writing code
+df=sat_scores
+median_score=df['sat_writing'].median()
+df.loc[df['sat_writing']==median_score]['student_id']
+
+
+
+import pandas as pd
+df=airbnb_search_details
+df.groupby(['property_type','city'])[['bathrooms','bedrooms']].mean().reset_index()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
